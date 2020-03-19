@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://gimbal/CameraGimbal.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Cursor.gd" type="Script" id=2]
+[ext_resource path="res://grid/Grid.tscn" type="PackedScene" id=3]
+[ext_resource path="res://EditorSpace.gd" type="Script" id=4]
+[ext_resource path="res://VoxelHolder.gd" type="Script" id=6]
+
+[sub_resource type="PanoramaSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_mode = 1
+background_sky = SubResource( 1 )
+background_color = Color( 0.17, 0.17, 0.17, 1 )
+background_energy = 0.0
+ambient_light_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_no_depth_test = true
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="PlaneMesh" id=4]
+material = SubResource( 3 )
+size = Vector2( 1, 1 )
+
+[node name="EditorSpace" type="Spatial"]
+script = ExtResource( 4 )
+
+[node name="CameraGimbal" parent="." instance=ExtResource( 1 )]
+ray_length = 10
+distance = 5.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="Grid" parent="." instance=ExtResource( 3 )]
+grid_width = 4
+grid_height = 5
+grid_depth = 4
+
+[node name="Cursor" type="Spatial" parent="."]
+script = ExtResource( 2 )
+
+[node name="CursorMesh" type="MeshInstance" parent="Cursor"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="VoxelHolder" type="Spatial" parent="."]
+script = ExtResource( 6 )
+[connection signal="camera_moved" from="CameraGimbal" to="Grid" method="_on_CameraGimbal_camera_moved"]
+[connection signal="pointing_at" from="CameraGimbal" to="Cursor" method="_on_CameraGimbal_pointing_at"]
