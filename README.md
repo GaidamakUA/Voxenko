@@ -8,6 +8,7 @@ For now it's only possible to add white cubes.
 1. Removing voxels
 1. Pallete support
 1. Lighting support
+1. Save/Load support
 
 ## Notes
 If you have any suggestions feel free to add issue.
