@@ -1,6 +1,8 @@
 tool
 extends Spatial
 
+class_name Grid
+
 export(int, 1, 50) var grid_width := 5 setget _width_updated
 export(int, 1, 50) var grid_height := 5 setget _height_updated
 export(int, 1, 50) var grid_depth := 5 setget _depth_updated

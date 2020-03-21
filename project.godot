@@ -9,18 +9,54 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Spatial",
-"class": "EditorSpace",
+"base": "Resource",
+"class": "Action",
 "language": "GDScript",
-"path": "res://EditorSpace.gd"
+"path": "res://resources/Action.gd"
+}, {
+"base": "Action",
+"class": "AddAction",
+"language": "GDScript",
+"path": "res://resources/AddAction.gd"
+}, {
+"base": "Button",
+"class": "BrushButton",
+"language": "GDScript",
+"path": "res://brush_picker/BrushButton.gd"
+}, {
+"base": "Action",
+"class": "DeleteAction",
+"language": "GDScript",
+"path": "res://resources/DeleteAction.gd"
+}, {
+"base": "Spatial",
+"class": "Grid",
+"language": "GDScript",
+"path": "res://grid/Grid.gd"
+}, {
+"base": "StaticBody",
+"class": "Voxel",
+"language": "GDScript",
+"path": "res://voxel/Voxel.gd"
+}, {
+"base": "Spatial",
+"class": "VoxelHolder",
+"language": "GDScript",
+"path": "res://voxel/VoxelHolder.gd"
 } ]
 _global_script_class_icons={
-"EditorSpace": ""
+"Action": "",
+"AddAction": "",
+"BrushButton": "",
+"DeleteAction": "",
+"Grid": "",
+"Voxel": "",
+"VoxelHolder": ""
 }
 
 [application]
 
-config/name="VoxelEditor"
+config/name="Voxenko"
 run/main_scene="res://EditorSpace.tscn"
 config/icon="res://icon.png"
 
