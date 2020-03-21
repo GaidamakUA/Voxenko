@@ -5,10 +5,10 @@ A free &amp; open-source Voxel editor, made with the Godot Engine!
 For now it's only possible to add white cubes.
 
 ## Planed for 0.1 release
-1. Removing voxels
-1. Pallete support
-1. Lighting support
-1. Save/Load support
+- [x] Removing voxels
+- [ ] Pallete support
+- [ ] Lighting support
+- [ ] Save/Load support
 
 ## Notes
 If you have any suggestions feel free to add issue.
