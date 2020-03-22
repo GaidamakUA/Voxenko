@@ -45,13 +45,13 @@ color = Color( 1, 1, 1, 1 )
 transform = Transform( 0.5, -0.433013, 0.75, 0, 0.866025, 0.5, -0.866025, -0.25, 0.433013, 0, 3.43155, 0 )
 
 [node name="CameraGimbal" parent="." instance=ExtResource( 1 )]
+transform = Transform( 3.53553, 0, 3.53553, 0, 5, 0, -3.53553, 0, 3.53553, 0, 0, 0 )
+ray_length = 40
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
 
 [node name="Grid" parent="." instance=ExtResource( 3 )]
-grid_width = 4
-grid_depth = 4
 
 [node name="Cursor" type="Spatial" parent="."]
 script = ExtResource( 2 )

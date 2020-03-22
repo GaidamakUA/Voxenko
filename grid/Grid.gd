@@ -3,9 +3,9 @@ extends Spatial
 
 class_name Grid
 
-export(int, 1, 50) var grid_width := 5 setget _width_updated
-export(int, 1, 50) var grid_height := 5 setget _height_updated
-export(int, 1, 50) var grid_depth := 5 setget _depth_updated
+export(int, 1, 50) var grid_width := 8 setget _width_updated
+export(int, 1, 50) var grid_height := 8 setget _height_updated
+export(int, 1, 50) var grid_depth := 8 setget _depth_updated
 
 func _width_updated(width: int):
 	grid_width = width
