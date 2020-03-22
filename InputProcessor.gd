@@ -11,7 +11,6 @@ func _unhandled_input(event):
 	if event.is_action_pressed("mouse_click"):
 		_selected_action.position = _position
 		_selected_action.normal = _normal
-		_selected_action.color = Color.green
 		emit_signal("action_called", _selected_action)
 
 func _on_CameraGimbal_pointing_at(position: Vector3, normal: Vector3):
