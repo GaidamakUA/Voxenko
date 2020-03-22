@@ -9,7 +9,7 @@ func _on_InputProcessor_action_called(action: Action):
 func add_voxel(position: Vector3, color: Color):
 	var voxel := voxel_scene.instance() as Voxel
 	voxel.translation = position
-	voxel.set_color(color)
+	voxel.color = color
 	add_child(voxel)
 
 func get_voxel(position: Vector3) -> Voxel:
