@@ -28,14 +28,24 @@ func _process(delta):
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion && Input.is_action_pressed("camera_movement"):
-		_move_camera_by_delta(event.relative * -1)
+		var fixed_delta: Vector2 = event.relative
+		fixed_delta.y *= -1
+		_move_camera_by_delta(event.relative)
 		emit_signal("camera_moved", $InnerGimbal/Camera.to_global(Vector3(0, 0, 0)))
 	if event is InputEventPanGesture:
 		_move_camera_by_delta(event.delta)
 		emit_signal("camera_moved", $InnerGimbal/Camera.to_global(Vector3(0, 0, 0)))
-	elif event is InputEventMagnifyGesture:
-		var scale_delta: float = 1 / ((event.factor - 1) * zoom_sensitivity + 1)
-		scale = scale * scale_delta
+	if event is InputEventMagnifyGesture:
+		_scale_by_delta(event.factor)
+	if event.is_action_pressed("zoom_in"):
+		_scale_by_delta(1.2)
+	elif event.is_action_pressed("zoom_out"):
+		_scale_by_delta(0.8)
+
+func _scale_by_delta(delta: float):
+	print(delta)
+	var scale_delta: float = 1 / ((delta - 1) * zoom_sensitivity + 1)
+	scale = scale * scale_delta	
 
 func _move_camera_by_delta(delta: Vector2):
 	if delta.x != 0:
