@@ -8,7 +8,7 @@ For now only MacOS is supported since camera control doesn't support mouse yet.
 You can get latests builds here https://gaidamakua.itch.io/voxenko
 
 ## Planed for 0.2 release
-- [ ] Mouse support
+- [x] Mouse support
 - [ ] UI improvement
 - [ ] Windows and linux support
 - [ ] Paint cubes tool
