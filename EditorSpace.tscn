@@ -66,6 +66,9 @@ material/0 = null
 ]]
 script = ExtResource( 6 )
 
+[node name="InputProcessor" type="Node" parent="."]
+script = ExtResource( 4 )
+
 [node name="LeftPanel" type="VBoxContainer" parent="."]
 __meta__ = {
 "_edit_use_anchors_": false
@@ -176,12 +179,10 @@ current_path = "/Users/gaidmakua/workspace/godot/my projects/Voxenko/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="InputProcessor" type="Node" parent="."]
-script = ExtResource( 4 )
 [connection signal="camera_moved" from="CameraGimbal" to="Grid" method="_on_CameraGimbal_camera_moved"]
 [connection signal="pointing_at" from="CameraGimbal" to="Cursor" method="_on_CameraGimbal_pointing_at"]
 [connection signal="pointing_at" from="CameraGimbal" to="InputProcessor" method="_on_CameraGimbal_pointing_at"]
+[connection signal="action_called" from="InputProcessor" to="VoxelHolder" method="_on_InputProcessor_action_called"]
 [connection signal="action_selected" from="LeftPanel/BrushPicker" to="InputProcessor" method="_on_BrushPicker_action_selected"]
 [connection signal="brush_selected" from="LeftPanel/BrushPicker/HBoxContainer/Delete" to="LeftPanel/BrushPicker" method="_on_brush_selected"]
 [connection signal="brush_selected" from="LeftPanel/BrushPicker/HBoxContainer/Add" to="LeftPanel/BrushPicker" method="_on_brush_selected"]
@@ -190,4 +191,3 @@ script = ExtResource( 4 )
 [connection signal="pressed" from="LeftPanel/TempSaveSystem/Load" to="LoadDialog" method="show"]
 [connection signal="file_selected" from="LoadDialog" to="LeftPanel/TempSaveSystem" method="_on_LoadDialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="LeftPanel/TempSaveSystem" method="_on_SaveDialog_file_selected"]
-[connection signal="action_called" from="InputProcessor" to="VoxelHolder" method="_on_InputProcessor_action_called"]

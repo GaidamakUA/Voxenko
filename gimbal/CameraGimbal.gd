@@ -27,17 +27,23 @@ func _process(delta):
 			_emit_cursor_position(cursor_position, cursor_normal)
 
 func _unhandled_input(event):
+	if event is InputEventMouseMotion && Input.is_action_pressed("camera_movement"):
+		_move_camera_by_delta(event.relative * -1)
+		emit_signal("camera_moved", $InnerGimbal/Camera.to_global(Vector3(0, 0, 0)))
 	if event is InputEventPanGesture:
-		if event.delta.x != 0:
-			var dir = 1 if invert_x else -1
-			rotate_object_local(Vector3.UP, dir * event.delta.x * mouse_sensitivity)
-		if event.delta.y != 0:
-			var dir = 1 if invert_y else -1
-			$InnerGimbal.rotate_object_local(Vector3.RIGHT, dir * event.delta.y * mouse_sensitivity)
+		_move_camera_by_delta(event.delta)
 		emit_signal("camera_moved", $InnerGimbal/Camera.to_global(Vector3(0, 0, 0)))
 	elif event is InputEventMagnifyGesture:
 		var scale_delta: float = 1 / ((event.factor - 1) * zoom_sensitivity + 1)
 		scale = scale * scale_delta
+
+func _move_camera_by_delta(delta: Vector2):
+	if delta.x != 0:
+		var dir = 1 if invert_x else -1
+		rotate_object_local(Vector3.UP, dir * delta.x * mouse_sensitivity)
+	if delta.y != 0:
+		var dir = 1 if invert_y else -1
+		$InnerGimbal.rotate_object_local(Vector3.RIGHT, dir * delta.y * mouse_sensitivity)
 
 func _update_distance(new_distance: float):
 	distance = new_distance
