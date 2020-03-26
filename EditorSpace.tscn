@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://gimbal/CameraGimbal.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Cursor.gd" type="Script" id=2]
@@ -10,7 +10,7 @@
 [ext_resource path="res://resources/DeleteAction.gd" type="Script" id=8]
 [ext_resource path="res://BrushPicker.gd" type="Script" id=9]
 [ext_resource path="res://TempSaveSystem.gd" type="Script" id=10]
-[ext_resource path="res://Viewport.gd" type="Script" id=11]
+[ext_resource path="res://resources/PaintAction.gd" type="Script" id=11]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 8 )
@@ -20,6 +20,12 @@ color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 7 )
+position = Vector3( 0, 0, 0 )
+normal = Vector3( 0, 1, 0 )
+color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 11 )
 position = Vector3( 0, 0, 0 )
 normal = Vector3( 0, 1, 0 )
 color = Color( 1, 1, 1, 1 )
@@ -149,6 +155,14 @@ __meta__ = {
 }
 action = SubResource( 2 )
 
+[node name="Paint" type="Button" parent="HBoxContainer/LeftPanel/BrushPicker/HBoxContainer"]
+margin_left = 100.0
+margin_right = 144.0
+margin_bottom = 20.0
+text = "Paint"
+script = ExtResource( 5 )
+action = SubResource( 7 )
+
 [node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/LeftPanel/BrushPicker"]
 margin_top = 24.0
 margin_right = 336.0
@@ -193,7 +207,6 @@ __meta__ = {
 size = Vector2( 300, 300 )
 handle_input_locally = false
 render_target_update_mode = 3
-script = ExtResource( 11 )
 
 [node name="EditorSpace" type="Spatial" parent="HBoxContainer/ViewportContainer/Viewport"]
 
@@ -231,6 +244,7 @@ script = ExtResource( 4 )
 [connection signal="action_selected" from="HBoxContainer/LeftPanel/BrushPicker" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/InputProcessor" method="_on_BrushPicker_action_selected"]
 [connection signal="brush_selected" from="HBoxContainer/LeftPanel/BrushPicker/HBoxContainer/Delete" to="HBoxContainer/LeftPanel/BrushPicker" method="_on_brush_selected"]
 [connection signal="brush_selected" from="HBoxContainer/LeftPanel/BrushPicker/HBoxContainer/Add" to="HBoxContainer/LeftPanel/BrushPicker" method="_on_brush_selected"]
+[connection signal="brush_selected" from="HBoxContainer/LeftPanel/BrushPicker/HBoxContainer/Paint" to="HBoxContainer/LeftPanel/BrushPicker" method="_on_brush_selected"]
 [connection signal="color_changed" from="HBoxContainer/LeftPanel/BrushPicker/ColorPicker" to="HBoxContainer/LeftPanel/BrushPicker" method="_on_ColorPicker_color_changed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/TempSaveSystem/Save" to="SaveDialog" method="show"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/TempSaveSystem/Load" to="LoadDialog" method="show"]
