@@ -11,7 +11,7 @@ You can get latests builds here https://gaidamakua.itch.io/voxenko
 - [x] Mouse support
 - [x] Implementing editor as component(UI improvement)
 - [x] Paint cubes tool
-- [ ] Windows and Linux support
+- [x] Windows and Linux support
 
 ## Planed for 0.3 release
 - [ ] .VOX import
