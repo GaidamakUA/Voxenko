@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "Action",
 "language": "GDScript",
-"path": "res://resources/Action.gd"
+"path": "res://drawing_system/Action.gd"
 }, {
 "base": "Action",
 "class": "AddAction",
 "language": "GDScript",
-"path": "res://resources/AddAction.gd"
+"path": "res://drawing_system/AddAction.gd"
 }, {
 "base": "Button",
 "class": "BrushButton",
@@ -27,17 +27,32 @@ _global_script_classes=[ {
 "base": "Action",
 "class": "DeleteAction",
 "language": "GDScript",
-"path": "res://resources/DeleteAction.gd"
+"path": "res://drawing_system/DeleteAction.gd"
+}, {
+"base": "Node",
+"class": "ExportStrategy",
+"language": "GDScript",
+"path": "res://save_system/ExportStrategy.gd"
 }, {
 "base": "Spatial",
 "class": "Grid",
 "language": "GDScript",
 "path": "res://grid/Grid.gd"
 }, {
+"base": "Node",
+"class": "IOStrategy",
+"language": "GDScript",
+"path": "res://save_system/io_strategies/IOStrategy.gd"
+}, {
+"base": "Node",
+"class": "ImportStrategy",
+"language": "GDScript",
+"path": "res://save_system/ImportStrategy.gd"
+}, {
 "base": "Action",
 "class": "PaintAction",
 "language": "GDScript",
-"path": "res://resources/PaintAction.gd"
+"path": "res://drawing_system/PaintAction.gd"
 }, {
 "base": "StaticBody",
 "class": "Voxel",
@@ -48,16 +63,25 @@ _global_script_classes=[ {
 "class": "VoxelHolder",
 "language": "GDScript",
 "path": "res://voxel/VoxelHolder.gd"
+}, {
+"base": "Resource",
+"class": "VoxelResource",
+"language": "GDScript",
+"path": "res://save_system/VoxelResource.gd"
 } ]
 _global_script_class_icons={
 "Action": "",
 "AddAction": "",
 "BrushButton": "",
 "DeleteAction": "",
+"ExportStrategy": "",
 "Grid": "",
+"IOStrategy": "",
+"ImportStrategy": "",
 "PaintAction": "",
 "Voxel": "",
-"VoxelHolder": ""
+"VoxelHolder": "",
+"VoxelResource": ""
 }
 
 [application]

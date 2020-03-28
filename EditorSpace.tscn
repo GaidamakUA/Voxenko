@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://gimbal/CameraGimbal.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Cursor.gd" type="Script" id=2]
@@ -6,11 +6,12 @@
 [ext_resource path="res://InputProcessor.gd" type="Script" id=4]
 [ext_resource path="res://brush_picker/BrushButton.gd" type="Script" id=5]
 [ext_resource path="res://voxel/VoxelHolder.gd" type="Script" id=6]
-[ext_resource path="res://resources/AddAction.gd" type="Script" id=7]
-[ext_resource path="res://resources/DeleteAction.gd" type="Script" id=8]
+[ext_resource path="res://drawing_system/AddAction.gd" type="Script" id=7]
+[ext_resource path="res://drawing_system/DeleteAction.gd" type="Script" id=8]
 [ext_resource path="res://BrushPicker.gd" type="Script" id=9]
-[ext_resource path="res://TempSaveSystem.gd" type="Script" id=10]
-[ext_resource path="res://resources/PaintAction.gd" type="Script" id=11]
+[ext_resource path="res://save_system/SaveSystem.gd" type="Script" id=10]
+[ext_resource path="res://drawing_system/PaintAction.gd" type="Script" id=11]
+[ext_resource path="res://save_system/io_strategies/Voxenko.gd" type="Script" id=12]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 8 )
@@ -24,26 +25,26 @@ position = Vector3( 0, 0, 0 )
 normal = Vector3( 0, 1, 0 )
 color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=3]
 script = ExtResource( 11 )
 position = Vector3( 0, 0, 0 )
 normal = Vector3( 0, 1, 0 )
 color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="PanoramaSky" id=3]
+[sub_resource type="PanoramaSky" id=4]
 
-[sub_resource type="Environment" id=4]
-background_sky = SubResource( 3 )
+[sub_resource type="Environment" id=5]
+background_sky = SubResource( 4 )
 background_energy = 0.0
 ambient_light_color = Color( 1, 1, 1, 1 )
 ambient_light_energy = 0.2
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="SpatialMaterial" id=6]
 flags_no_depth_test = true
 albedo_color = Color( 1, 0, 0, 1 )
 
-[sub_resource type="PlaneMesh" id=6]
-material = SubResource( 5 )
+[sub_resource type="PlaneMesh" id=7]
+material = SubResource( 6 )
 size = Vector2( 1, 1 )
 
 [node name="Editor" type="Control"]
@@ -62,7 +63,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SaveDialog" type="FileDialog" parent="."]
+[node name="SaveSystem" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -300.0
+margin_right = 512.0
+margin_bottom = 300.0
+mouse_filter = 2
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveDialog" type="FileDialog" parent="SaveSystem"]
 visible = true
 anchor_left = 0.5
 anchor_top = 0.5
@@ -82,7 +98,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LoadDialog" type="FileDialog" parent="."]
+[node name="OpenDialog" type="FileDialog" parent="SaveSystem"]
 visible = true
 anchor_left = 0.5
 anchor_top = 0.5
@@ -103,6 +119,11 @@ current_path = "/Users/gaidmakua/workspace/godot/my projects/Voxenko/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="IOStrategies" type="Node" parent="SaveSystem"]
+
+[node name="Voxenko" type="Node" parent="SaveSystem/IOStrategies"]
+script = ExtResource( 12 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_right = 1.0
@@ -161,12 +182,13 @@ margin_right = 144.0
 margin_bottom = 20.0
 text = "Paint"
 script = ExtResource( 5 )
-action = SubResource( 7 )
+action = SubResource( 3 )
 
 [node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/LeftPanel/BrushPicker"]
-margin_top = 24.0
-margin_right = 336.0
-margin_bottom = 486.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 4.0
+margin_bottom = 4.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -175,7 +197,6 @@ __meta__ = {
 margin_top = 490.0
 margin_right = 336.0
 margin_bottom = 510.0
-script = ExtResource( 10 )
 
 [node name="Save" type="Button" parent="HBoxContainer/LeftPanel/TempSaveSystem"]
 margin_right = 41.0
@@ -185,7 +206,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Load" type="Button" parent="HBoxContainer/LeftPanel/TempSaveSystem"]
+[node name="Open" type="Button" parent="HBoxContainer/LeftPanel/TempSaveSystem"]
 margin_left = 45.0
 margin_right = 87.0
 margin_bottom = 20.0
@@ -217,7 +238,7 @@ transform = Transform( 0.5, -0.433013, 0.75, 0, 0.866025, 0.5, -0.866025, -0.25,
 ray_length = 40
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace"]
-environment = SubResource( 4 )
+environment = SubResource( 5 )
 
 [node name="Grid" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace" instance=ExtResource( 3 )]
 grid_width = 8
@@ -229,7 +250,7 @@ script = ExtResource( 2 )
 
 [node name="CursorMesh" type="MeshInstance" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace/Cursor"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
-mesh = SubResource( 6 )
+mesh = SubResource( 7 )
 material/0 = null
 
 [node name="VoxelHolder" type="Spatial" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace" groups=[
@@ -239,16 +260,14 @@ script = ExtResource( 6 )
 
 [node name="InputProcessor" type="Node" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace"]
 script = ExtResource( 4 )
-[connection signal="file_selected" from="SaveDialog" to="HBoxContainer/LeftPanel/TempSaveSystem" method="_on_SaveDialog_file_selected"]
-[connection signal="file_selected" from="LoadDialog" to="HBoxContainer/LeftPanel/TempSaveSystem" method="_on_LoadDialog_file_selected"]
 [connection signal="action_selected" from="HBoxContainer/LeftPanel/BrushPicker" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/InputProcessor" method="_on_BrushPicker_action_selected"]
 [connection signal="brush_selected" from="HBoxContainer/LeftPanel/BrushPicker/HBoxContainer/Delete" to="HBoxContainer/LeftPanel/BrushPicker" method="_on_brush_selected"]
 [connection signal="brush_selected" from="HBoxContainer/LeftPanel/BrushPicker/HBoxContainer/Add" to="HBoxContainer/LeftPanel/BrushPicker" method="_on_brush_selected"]
 [connection signal="brush_selected" from="HBoxContainer/LeftPanel/BrushPicker/HBoxContainer/Paint" to="HBoxContainer/LeftPanel/BrushPicker" method="_on_brush_selected"]
 [connection signal="color_changed" from="HBoxContainer/LeftPanel/BrushPicker/ColorPicker" to="HBoxContainer/LeftPanel/BrushPicker" method="_on_ColorPicker_color_changed"]
-[connection signal="pressed" from="HBoxContainer/LeftPanel/TempSaveSystem/Save" to="SaveDialog" method="show"]
-[connection signal="pressed" from="HBoxContainer/LeftPanel/TempSaveSystem/Load" to="LoadDialog" method="show"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/TempSaveSystem/Save" to="SaveSystem" method="_on_Save_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/TempSaveSystem/Open" to="SaveSystem" method="_on_Open_pressed"]
 [connection signal="camera_moved" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/CameraGimbal" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/Grid" method="_on_CameraGimbal_camera_moved"]
-[connection signal="pointing_at" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/CameraGimbal" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/Cursor" method="_on_CameraGimbal_pointing_at"]
 [connection signal="pointing_at" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/CameraGimbal" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/InputProcessor" method="_on_CameraGimbal_pointing_at"]
+[connection signal="pointing_at" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/CameraGimbal" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/Cursor" method="_on_CameraGimbal_pointing_at"]
 [connection signal="action_called" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/InputProcessor" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/VoxelHolder" method="_on_InputProcessor_action_called"]
