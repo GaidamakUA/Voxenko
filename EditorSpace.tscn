@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://gimbal/CameraGimbal.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Cursor.gd" type="Script" id=2]
@@ -12,6 +12,10 @@
 [ext_resource path="res://save_system/SaveSystem.gd" type="Script" id=10]
 [ext_resource path="res://drawing_system/PaintAction.gd" type="Script" id=11]
 [ext_resource path="res://save_system/io_strategies/Voxenko.gd" type="Script" id=12]
+[ext_resource path="res://save_system/import_strategies/Vox.gd" type="Script" id=13]
+[ext_resource path="res://save_system/io_strategies/IOStrategiesFactory.gd" type="Script" id=14]
+[ext_resource path="res://save_system/import_strategies/ImportStrategiesFactory.gd" type="Script" id=15]
+[ext_resource path="res://EditorSpace.gd" type="Script" id=16]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 8 )
@@ -120,10 +124,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IOStrategies" type="Node" parent="SaveSystem"]
+[node name="IOStrategiesFactory" type="Node" parent="SaveSystem"]
+script = ExtResource( 14 )
 
-[node name="Voxenko" type="Node" parent="SaveSystem/IOStrategies"]
+[node name="Voxenko" type="Node" parent="SaveSystem/IOStrategiesFactory"]
 script = ExtResource( 12 )
+
+[node name="ImportStrategiesFactory" type="Node" parent="SaveSystem"]
+script = ExtResource( 15 )
+
+[node name="Vox" type="Node" parent="SaveSystem/ImportStrategiesFactory"]
+script = ExtResource( 13 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_right = 1.0
@@ -185,10 +196,9 @@ script = ExtResource( 5 )
 action = SubResource( 3 )
 
 [node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/LeftPanel/BrushPicker"]
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 4.0
-margin_bottom = 4.0
+margin_top = 24.0
+margin_right = 336.0
+margin_bottom = 486.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -208,9 +218,15 @@ __meta__ = {
 
 [node name="Open" type="Button" parent="HBoxContainer/LeftPanel/TempSaveSystem"]
 margin_left = 45.0
-margin_right = 87.0
+margin_right = 92.0
 margin_bottom = 20.0
-text = "Load"
+text = "Open"
+
+[node name="Import" type="Button" parent="HBoxContainer/LeftPanel/TempSaveSystem"]
+margin_left = 96.0
+margin_right = 152.0
+margin_bottom = 20.0
+text = "Import"
 
 [node name="ViewportContainer" type="ViewportContainer" parent="HBoxContainer"]
 margin_left = 340.0
@@ -230,20 +246,19 @@ handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="EditorSpace" type="Spatial" parent="HBoxContainer/ViewportContainer/Viewport"]
+script = ExtResource( 16 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace"]
 transform = Transform( 0.5, -0.433013, 0.75, 0, 0.866025, 0.5, -0.866025, -0.25, 0.433013, 0, 3.43155, 0 )
 
 [node name="CameraGimbal" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace" instance=ExtResource( 1 )]
+transform = Transform( 3.53553, 0, 3.53553, 0, 5, 0, -3.53553, 0, 3.53553, 0, 0, 0 )
 ray_length = 40
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace"]
 environment = SubResource( 5 )
 
 [node name="Grid" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace" instance=ExtResource( 3 )]
-grid_width = 8
-grid_height = 8
-grid_depth = 8
 
 [node name="Cursor" type="Spatial" parent="HBoxContainer/ViewportContainer/Viewport/EditorSpace"]
 script = ExtResource( 2 )
@@ -267,7 +282,8 @@ script = ExtResource( 4 )
 [connection signal="color_changed" from="HBoxContainer/LeftPanel/BrushPicker/ColorPicker" to="HBoxContainer/LeftPanel/BrushPicker" method="_on_ColorPicker_color_changed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/TempSaveSystem/Save" to="SaveSystem" method="_on_Save_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/TempSaveSystem/Open" to="SaveSystem" method="_on_Open_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/TempSaveSystem/Import" to="SaveSystem" method="_on_Import_pressed"]
 [connection signal="camera_moved" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/CameraGimbal" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/Grid" method="_on_CameraGimbal_camera_moved"]
-[connection signal="pointing_at" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/CameraGimbal" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/InputProcessor" method="_on_CameraGimbal_pointing_at"]
 [connection signal="pointing_at" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/CameraGimbal" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/Cursor" method="_on_CameraGimbal_pointing_at"]
+[connection signal="pointing_at" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/CameraGimbal" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/InputProcessor" method="_on_CameraGimbal_pointing_at"]
 [connection signal="action_called" from="HBoxContainer/ViewportContainer/Viewport/EditorSpace/InputProcessor" to="HBoxContainer/ViewportContainer/Viewport/EditorSpace/VoxelHolder" method="_on_InputProcessor_action_called"]
