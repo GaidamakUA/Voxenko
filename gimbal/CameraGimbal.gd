@@ -31,10 +31,12 @@ func _unhandled_input(event):
 		var fixed_delta: Vector2 = event.relative
 		fixed_delta.y *= -1
 		_move_camera_by_delta(event.relative)
-		emit_signal("camera_moved", $InnerGimbal/Camera.to_global(Vector3(0, 0, 0)))
+		var global_camera_position = $InnerGimbal/Camera.to_global(Vector3(0, 0, 0))
+		emit_signal("camera_moved", global_camera_position - translation)
 	if event is InputEventPanGesture:
 		_move_camera_by_delta(event.delta)
-		emit_signal("camera_moved", $InnerGimbal/Camera.to_global(Vector3(0, 0, 0)))
+		var global_camera_position = $InnerGimbal/Camera.to_global(Vector3(0, 0, 0))
+		emit_signal("camera_moved", global_camera_position - translation)
 	if event is InputEventMagnifyGesture:
 		_scale_by_delta(event.factor)
 	if event.is_action_pressed("zoom_in"):
@@ -73,18 +75,5 @@ func _emit_cursor_position(raw_position: Vector3, raw_normal: Vector3):
 
 func _get_proper_position(raw_position: Vector3, normal: Vector3) -> Vector3:
 	var position = raw_position
-	var displacement = _get_snap_displacement()
-	position += displacement
 	position = position.snapped(Vector3.ONE)
-	position -= displacement
 	return position - normal / 2
-
-func _get_snap_displacement() -> Vector3:
-	var displacement = Vector3()
-	if grid.grid_width % 2 == 0:
-		displacement.x = 0.5
-	if grid.grid_height % 2 == 0:
-		displacement.y = 0.5
-	if grid.grid_depth % 2 == 0:
-		displacement.z = 0.5
-	return displacement 
