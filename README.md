@@ -14,7 +14,7 @@ You can get latests builds here https://gaidamakua.itch.io/voxenko
 - [x] Windows and Linux support
 
 ## Planed for 0.3 release
-- [ ] .VOX import
+- [x] .VOX import
 - [ ] .OBJ export
 
 ## Notes
