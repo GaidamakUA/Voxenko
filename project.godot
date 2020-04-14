@@ -30,9 +30,14 @@ _global_script_classes=[ {
 "path": "res://drawing_system/DeleteAction.gd"
 }, {
 "base": "Node",
+"class": "ExportStrategiesFactory",
+"language": "GDScript",
+"path": "res://save_system/export_strategies/ExportStrategiesFactory.gd"
+}, {
+"base": "Node",
 "class": "ExportStrategy",
 "language": "GDScript",
-"path": "res://save_system/ExportStrategy.gd"
+"path": "res://save_system/export_strategies/ExportStrategy.gd"
 }, {
 "base": "Spatial",
 "class": "Grid",
@@ -64,6 +69,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://drawing_system/PaintAction.gd"
 }, {
+"base": "Node",
+"class": "TopologyCreator",
+"language": "GDScript",
+"path": "res://save_system/export_strategies/TopologyCreator.gd"
+}, {
 "base": "StaticBody",
 "class": "Voxel",
 "language": "GDScript",
@@ -84,6 +94,7 @@ _global_script_class_icons={
 "AddAction": "",
 "BrushButton": "",
 "DeleteAction": "",
+"ExportStrategiesFactory": "",
 "ExportStrategy": "",
 "Grid": "",
 "IOStrategiesFactory": "",
@@ -91,6 +102,7 @@ _global_script_class_icons={
 "ImportStrategiesFactory": "",
 "ImportStrategy": "",
 "PaintAction": "",
+"TopologyCreator": "",
 "Voxel": "",
 "VoxelHolder": "",
 "VoxelResource": ""

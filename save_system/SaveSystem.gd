@@ -7,6 +7,7 @@ onready var save_dialog = $SaveDialog
 onready var open_dialog = $OpenDialog
 onready var io_strategies_factory := $IOStrategiesFactory as IOStrategiesFactory
 onready var import_strategies_factory := $ImportStrategiesFactory as ImportStrategiesFactory
+onready var export_strategies_factory := $ExportStrategiesFactory as ExportStrategiesFactory
 
 func _ready():
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
@@ -30,9 +31,19 @@ func _on_Import_pressed():
 	open_dialog.show()
 	var file_name: String = yield($OpenDialog, "file_selected")
 	_import_file(file_name)
+
+func _on_Export_pressed():
+	save_dialog.filters = export_strategies_factory.filters
+	save_dialog.show()
+	current_file = yield($SaveDialog, "file_selected")
+	_export_file(current_file)
 	
 func _save_file(path: String):
 	var strategy := io_strategies_factory.get_strategy_for_file(path)
+	strategy.save_file(path, _get_voxels())
+
+func _export_file(path: String):
+	var strategy := export_strategies_factory.get_strategy_for_file(path)
 	strategy.save_file(path, _get_voxels())
 
 func _open_file(path: String):
